@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resale Scout eBay First</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">eBay-first resale assistant</p>
+        <h1>Resale Scout</h1>
+        <p class="muted">Enter product details, check eBay sold comps, calculate seller cost in AUD, estimate profit/loss, and export your records.</p>
+      </div>
+      <div class="hero-panel">
+        <div><span>Records</span><strong id="recordCount">0</strong></div>
+        <div><span>Status</span><strong id="status">Ready</strong></div>
+      </div>
+    </section>
+
+    <section class="card warning">
+      <strong>Important:</strong>
+      This is an eBay-first package. Automatic sold-comps fetching needs a sold-comps API provider.
+      Without an API, use the eBay Sold links and paste sold prices manually.
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Selling market</p>
+          <h2>Choose one country</h2>
+        </div>
+        <button id="resetMarketBtn" type="button" class="secondary">Reset to Australia</button>
+      </div>
+
+      <div class="market-grid">
+        <label class="market-card">
+          <input type="radio" name="market" value="au" checked>
+          <span><strong>Australia</strong><small>Target and comps in AUD</small></span>
+        </label>
+        <label class="market-card">
+          <input type="radio" name="market" value="sg">
+          <span><strong>Singapore</strong><small>Target and comps in SGD</small></span>
+        </label>
+        <label class="market-card">
+          <input type="radio" name="market" value="jp">
+          <span><strong>Japan</strong><small>Target and comps in JPY</small></span>
+        </label>
+        <label class="market-card">
+          <input type="radio" name="market" value="us">
+          <span><strong>United States</strong><small>Target and comps in USD</small></span>
+        </label>
+        <label class="market-card">
+          <input type="radio" name="market" value="uk">
+          <span><strong>United Kingdom</strong><small>Target and comps in GBP</small></span>
+        </label>
+      </div>
+    </section>
+
+    <section class="grid">
+      <section class="card">
+        <h2>Product details</h2>
+
+        <label>Product search phrase
+          <input id="productPhrase" placeholder="e.g. 8BitDo M30 white 2.4GHz">
+        </label>
+
+        <div class="two">
+          <label>Brand
+            <input id="brand" placeholder="e.g. 8BitDo">
+          </label>
+          <label>Model
+            <input id="model" placeholder="e.g. M30">
+          </label>
+        </div>
+
+        <div class="two">
+          <label>Variant / connection type
+            <input id="variant" placeholder="e.g. Bluetooth, 2.4GHz, Deluxe, Limited">
+          </label>
+          <label>Colour
+            <input id="colour" placeholder="e.g. white, black, red">
+          </label>
+        </div>
+
+        <label>Condition filter
+          <select id="condition">
+            <option value="">Any condition</option>
+            <option>Brand new</option>
+            <option>Like new</option>
+            <option>Preowned</option>
+            <option>Loose</option>
+            <option>Incomplete</option>
+            <option>For parts / repair</option>
+            <option>Unknown</option>
+          </select>
+        </label>
+
+        <label>Listing URL
+          <input id="listingUrl" placeholder="Paste seller listing URL, optional">
+        </label>
+
+        <section class="deal-card">
+          <div class="section-head simple">
+            <h3>Seller asking price / buy cost</h3>
+            <p>Example: if seller wants 25 SGD, type <strong>25</strong> and choose <strong>SGD</strong>. The app converts it to AUD.</p>
+          </div>
+
+          <div class="two">
+            <label>Seller asking price
+              <input id="buyPrice" placeholder="e.g. 25">
+            </label>
+            <label>Seller price currency
+              <select id="buyCurrency">
+                <option value="AUD">AUD - Australia</option>
+                <option value="SGD" selected>SGD - Singapore</option>
+                <option value="JPY">JPY - Japan</option>
+                <option value="USD">USD - United States</option>
+                <option value="GBP">GBP - United Kingdom</option>
+              </select>
+            </label>
+          </div>
+
+          <div id="buyCostResult" class="mini-result">Enter seller asking price to see AUD conversion.</div>
+        </section>
+
+        <section class="deal-card">
+          <div class="section-head simple">
+            <h3>Your target selling price</h3>
+            <p>Type a plain number. It uses the selected selling country’s currency.</p>
+          </div>
+
+          <label>Target selling price
+            <input id="price" placeholder="e.g. 60">
+          </label>
+        </section>
+
+        <label>Notes
+          <textarea id="notes" placeholder="Seller notes, box condition, missing parts, questions to ask, etc."></textarea>
+        </label>
+
+        <div class="button-row">
+          <button id="analyzeBtn" type="button">Analyze Product</button>
+          <button id="clearBtn" type="button" class="secondary">Clear form</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>eBay sold comps</h2>
+
+        <div class="api-box">
+          <h3>Optional sold-comps API connector</h3>
+          <p class="muted">Use this only if you have a third-party eBay sold-comps API endpoint. Otherwise use manual paste below.</p>
+
+          <label>Sold-comps API endpoint
+            <input id="apiEndpoint" placeholder="Optional endpoint that returns sold listings JSON">
+          </label>
+
+          <label>API key / token
+            <input id="apiKey" type="password" placeholder="Optional">
+          </label>
+
+          <div class="button-row">
+            <button id="fetchCompsBtn" type="button">Fetch eBay sold comps</button>
+            <button id="saveApiBtn" type="button" class="secondary">Save API settings locally</button>
+          </div>
+
+          <p class="small muted">Expected JSON can be flexible. The app tries to find price fields named price, soldPrice, value, amount, or currentPrice.</p>
+        </div>
+
+        <div class="manual-box">
+          <h3>Manual fallback</h3>
+          <p class="muted">Open eBay Sold, copy recent sold prices, and paste them here one per line.</p>
+
+          <label>Recent eBay sold-price comps only
+            <textarea id="soldPrices" placeholder="Example:
+42
+38
+45"></textarea>
+          </label>
+        </div>
+
+        <div class="button-row">
+          <button id="priceCheckBtn" type="button" class="secondary">Calculate price check</button>
+          <button id="rateBtn" type="button" class="secondary">Update AUD exchange rates</button>
+        </div>
+
+        <div id="priceCheckResult" class="price-result">Enter target price and sold comps to compare your price to the eBay market.</div>
+        <div id="profitResult" class="profit-result">Enter seller asking price and sold comps to calculate estimated profit/loss in AUD.</div>
+      </section>
+    </section>
+
+    <section class="card">
+      <div class="section-head simple">
+        <h2>Research output</h2>
+        <p>Links are based on your product phrase and selected country.</p>
+      </div>
+
+      <div id="summary" class="summary-box">Enter product details and click Analyze Product.</div>
+      <div id="links" class="links"></div>
+
+      <div class="button-row">
+        <button id="saveBtn" type="button">Save record</button>
+        <button id="exportBtn" type="button" class="secondary">Export CSV</button>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Saved records</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Condition</th>
+              <th>Country</th>
+              <th>Seller Ask</th>
+              <th>Seller Ask AUD</th>
+              <th>Avg eBay Sold</th>
+              <th>Target Price</th>
+              <th>Price Check</th>
+              <th>Profit / Loss AUD</th>
+              <th>URL</th>
+              <th>Notes</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody id="records">
+            <tr><td colspan="12">No saved records yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
