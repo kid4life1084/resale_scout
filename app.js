@@ -242,10 +242,6 @@
     });
     html += `</div></div>`;
 
-    html += `<div class="country-group"><h3>eBay Research Tool</h3><div class="link-grid">
-      <a class="research-link" href="https://www.ebay.com/sh/research" target="_blank" rel="noopener noreferrer">eBay Product Research<span>Open ↗</span></a>
-      <a class="research-link" href="${escapeHtml(market.sold(q))}" target="_blank" rel="noopener noreferrer">eBay Sold Search<span>Open ↗</span></a>
-    </div></div>`;
 
     html += `<div class="country-group"><h3>Review Search</h3><div class="link-grid">
       <a class="research-link" href="https://www.google.com/search?q=${q}+review" target="_blank" rel="noopener noreferrer">Google Reviews<span>Open ↗</span></a>
