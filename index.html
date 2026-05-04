@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Resale Scout</title>
-  <link rel="stylesheet" href="styles.css?v=instantfix1" />
+  <title>Scouty</title>
+  <link rel="stylesheet" href="styles.css?v=frankfurter1" />
 </head>
 <body>
 <main class="app">
   <section class="hero">
     <div>
       <p class="eyebrow">eBay-first resale assistant</p>
-      <h1>Resale Scout</h1>
-      <p class="muted">Enter product details, open eBay Product Research, convert seller cost to AUD, send records to Google Sheets, and export your records.</p>
+      <h1>Scouty</h1>
+      <p class="muted">Research resale items faster with eBay, marketplace links, Wise-style currency checks, review searches, and Google Sheets export.</p>
     </div>
     <div class="hero-panel">
       <div><span>Records</span><strong id="recordCount">0</strong></div>
@@ -28,39 +28,32 @@
   <section class="card">
     <div class="section-head">
       <div>
-        <p class="eyebrow">Selling market</p>
-        <h2>Choose one country</h2>
+        <p class="eyebrow dark">Research market</p>
+        <h2>Choose the country you want to research/sell in</h2>
       </div>
       <button id="resetMarketBtn" type="button" class="secondary">Reset to Australia</button>
     </div>
-
     <div class="market-grid">
-      <label class="market-card"><input type="radio" name="market" value="au" checked><span><strong>Australia</strong><small>eBay AU, AUD</small></span></label>
-      <label class="market-card"><input type="radio" name="market" value="sg"><span><strong>Singapore</strong><small>eBay SG, SGD</small></span></label>
-      <label class="market-card"><input type="radio" name="market" value="jp"><span><strong>Japan</strong><small>eBay US/Japan refs, JPY</small></span></label>
-      <label class="market-card"><input type="radio" name="market" value="us"><span><strong>United States</strong><small>eBay US, USD</small></span></label>
-      <label class="market-card"><input type="radio" name="market" value="uk"><span><strong>United Kingdom</strong><small>eBay UK, GBP</small></span></label>
+      <label class="market-card"><input type="radio" name="market" value="au" checked><span><strong>Australia</strong><small>Research in AUD</small></span></label>
+      <label class="market-card"><input type="radio" name="market" value="sg"><span><strong>Singapore</strong><small>Research in SGD</small></span></label>
+      <label class="market-card"><input type="radio" name="market" value="jp"><span><strong>Japan</strong><small>Research in JPY</small></span></label>
+      <label class="market-card"><input type="radio" name="market" value="us"><span><strong>United States</strong><small>Research in USD</small></span></label>
+      <label class="market-card"><input type="radio" name="market" value="uk"><span><strong>United Kingdom</strong><small>Research in GBP</small></span></label>
     </div>
   </section>
 
   <section class="grid">
     <section class="card">
       <h2>Product details</h2>
-
-      <label>Product search phrase
-        <input id="productPhrase" placeholder="e.g. 8BitDo M30 black Bluetooth">
-      </label>
-
+      <label>Product search phrase<input id="productPhrase" placeholder="e.g. R-Type 1 PC Engine"></label>
       <div class="two">
-        <label>Brand<input id="brand" placeholder="e.g. 8BitDo"></label>
-        <label>Model<input id="model" placeholder="e.g. M30"></label>
+        <label>Brand<input id="brand" placeholder="Optional"></label>
+        <label>Model<input id="model" placeholder="Optional"></label>
       </div>
-
       <div class="two">
-        <label>Variant / connection type<input id="variant" placeholder="e.g. Bluetooth, 2.4GHz, Deluxe"></label>
-        <label>Colour<input id="colour" placeholder="e.g. black, white, red"></label>
+        <label>Variant / connection type<input id="variant" placeholder="Optional"></label>
+        <label>Colour<input id="colour" placeholder="Optional"></label>
       </div>
-
       <label>Condition filter
         <select id="condition">
           <option value="">Any condition</option>
@@ -73,59 +66,44 @@
           <option>Unknown</option>
         </select>
       </label>
-
-      <label>Listing URL
-        <input id="listingUrl" placeholder="Paste seller listing URL, optional">
-      </label>
+      <label>Listing URL<input id="listingUrl" placeholder="Paste seller listing URL, optional"></label>
 
       <section class="deal-card">
         <div class="section-head simple">
           <h3>Seller asking price / buy cost</h3>
-          <p>Type currency directly, e.g. <strong>25 SGD</strong>, or type a number and use the fallback currency.</p>
+          <p>Type only the seller’s asking price number, then choose the seller currency below. The app converts it into your selected research market currency using live exchange rates.</p>
         </div>
-
         <div class="two">
-          <label>Seller asking price
-            <input id="buyPrice" placeholder="e.g. 25 SGD">
-          </label>
-          <label>Fallback currency
+          <label>Seller asking price number<input id="buyPrice" inputmode="decimal" placeholder="e.g. 27"></label>
+          <label>Seller asking price currency
             <select id="buyCurrency">
               <option value="AUD">AUD - Australia</option>
-              <option value="SGD" selected>SGD - Singapore</option>
+              <option value="SGD">SGD - Singapore</option>
               <option value="JPY">JPY - Japan</option>
               <option value="USD">USD - United States</option>
               <option value="GBP">GBP - United Kingdom</option>
             </select>
           </label>
         </div>
-
         <div class="two">
-          <label>Wise rate override
-            <input id="wiseRate" placeholder="Optional, e.g. 1.09">
+          <label>Manual rate override
+            <input id="marketRateOverride" placeholder="Optional, e.g. 0.7844 for SGD→USD">
           </label>
           <label>Conversion source
             <select id="rateMode">
-              <option value="wise" selected>Use Wise override if entered</option>
-              <option value="default">Use built-in estimate</option>
+              <option value="default" selected>Use live Frankfurter rate</option>
+              <option value="manual">Use manual rate override</option>
             </select>
           </label>
         </div>
-
         <div class="button-row">
           <button id="openWiseBtn" type="button" class="secondary">Open Wise Conversion</button>
         </div>
-
-        <div id="buyCostResult" class="mini-result">Enter seller asking price. It will convert instantly when you analyze the product.</div>
+        <div id="buyCostResult" class="mini-result">Enter seller asking price number, choose its currency, then analyze.</div>
       </section>
 
-      <label>Your target selling price
-        <input id="price" placeholder="Optional, e.g. 60">
-      </label>
-
-      <label>Notes
-        <textarea id="notes" placeholder="Seller notes, box condition, missing parts, questions to ask, etc."></textarea>
-      </label>
-
+      <label>Your target selling price<input id="price" placeholder="Optional, e.g. 60"></label>
+      <label>Notes<textarea id="notes" placeholder="Seller notes, box condition, missing parts, questions to ask, etc."></textarea></label>
       <div class="button-row">
         <button id="analyzeBtn" type="button">Analyze Product</button>
         <button id="clearBtn" type="button" class="secondary">Clear form</button>
@@ -135,34 +113,29 @@
     <section class="card">
       <h2>Image research</h2>
       <p class="muted">Use these when you need to identify a product, confirm the colour, or check the exact variant.</p>
-
       <div class="lens-card">
         <div>
           <h3>Use Google Lens</h3>
-          <p>Open Google Lens, upload the seller photo or screenshot, then copy the product name, model, colour, or variant back here.</p>
+          <p>Upload the seller photo or screenshot, then copy product details back here.</p>
         </div>
         <a class="primary-link" href="https://lens.google.com/search" target="_blank" rel="noopener noreferrer">Open Google Lens</a>
       </div>
-
       <div class="lens-card soft">
         <div>
           <h3>Google Images</h3>
-          <p>After entering a search phrase, open image search to visually confirm packaging, accessories, colour and variant.</p>
+          <p>Visually confirm packaging, accessories, colour and variant.</p>
         </div>
         <button id="googleImagesBtn" type="button" class="secondary">Open Google Images</button>
       </div>
-
       <section class="sellthrough-box">
         <div class="section-head simple">
           <h2>eBay sell-through rate research</h2>
-          <p>Use eBay’s own Product Research tool for official sell-through rate, recent sales, average sold price and market trends.</p>
+          <p>Use eBay’s Product Research tool for official sell-through rate, recent sales, average sold price and market trends.</p>
         </div>
-
         <div class="button-row">
           <button id="openResearchBtn" type="button">Open eBay Product Research</button>
           <button id="openSoldBtn" type="button" class="secondary">Open eBay Sold Search</button>
         </div>
-
         <div id="sellThroughResult" class="sellthrough-result">Open eBay Product Research, search your product phrase there, and use eBay’s official sell-through rate.</div>
       </section>
     </section>
@@ -173,9 +146,7 @@
       <h2>Google Sheets export</h2>
       <p>Use a Google Apps Script web app URL to send the current record directly into your Google Sheet.</p>
     </div>
-    <label>Google Sheets Web App URL
-      <input id="sheetWebhookUrl" placeholder="Paste your Google Apps Script Web App URL here">
-    </label>
+    <label>Google Sheets Web App URL<input id="sheetWebhookUrl" placeholder="Paste your Google Apps Script Web App URL here"></label>
     <div class="button-row">
       <button id="saveWebhookBtn" type="button" class="secondary">Save Sheets URL locally</button>
       <button id="sendSheetBtn" type="button">Send current record to Google Sheets</button>
@@ -186,7 +157,7 @@
   <section class="card">
     <div class="section-head simple">
       <h2>Research output</h2>
-      <p>Analyze Product converts the seller asking price into AUD and prepares clean research links.</p>
+      <p>Analyze Product converts the seller asking price from the seller currency into the selected research market currency.</p>
     </div>
     <div id="summary" class="summary-box">Enter product details and click Analyze Product.</div>
     <div id="links" class="links"></div>
@@ -200,16 +171,12 @@
     <h2>Saved records</h2>
     <div class="table-wrap">
       <table>
-        <thead>
-          <tr>
-            <th>Product</th><th>Condition</th><th>Country</th><th>Seller Ask</th><th>Seller Ask AUD</th><th>Target Price</th><th>eBay Research</th><th>URL</th><th>Notes</th><th>Date</th>
-          </tr>
-        </thead>
+        <thead><tr><th>Product</th><th>Condition</th><th>Research Country</th><th>Seller Ask</th><th>Converted</th><th>Target Price</th><th>eBay Research</th><th>URL</th><th>Notes</th><th>Date</th></tr></thead>
         <tbody id="records"><tr><td colspan="10">No saved records yet.</td></tr></tbody>
       </table>
     </div>
   </section>
 </main>
-<script src="app.js?v=instantfix1" defer></script>
+<script src="app.js?v=frankfurter1" defer></script>
 </body>
 </html>

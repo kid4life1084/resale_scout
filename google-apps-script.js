@@ -1,7 +1,7 @@
 function doPost(e) {
   const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   const data = JSON.parse(e.postData.contents);
-  const headers = ["Date","Product","Condition","Country","Seller Ask","Seller Ask AUD","Target Price","eBay Research","Listing URL","Notes"];
+  const headers = ["Date","Product","Condition","Research Country","Seller Ask","Converted","Target Price","eBay Research","Listing URL","Notes"];
 
   if (sheet.getLastRow() === 0) sheet.appendRow(headers);
 
@@ -11,7 +11,7 @@ function doPost(e) {
     data.condition || "",
     data.country || "",
     data.buy || "",
-    data.buyAud || "",
+    data.converted || "",
     data.price || "",
     data.ebayResearch || "",
     data.url || "",

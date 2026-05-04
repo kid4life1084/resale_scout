@@ -1,4 +1,4 @@
-# Resale Scout - Analyze Instant Fix
+# Resale Scout - Frankfurter Live FX
 
 Files are at ZIP root:
 - index.html
@@ -7,13 +7,18 @@ Files are at ZIP root:
 - google-apps-script.js
 - README.md
 
-Important fix:
-- Removed the fragile async exchange-rate fetch from the Analyze Product path.
-- Analyze Product now runs instantly using:
-  - Wise override rate if entered
-  - built-in estimate if no Wise override is entered
-- Added on-screen error reporting.
-- Added cache-busting query strings to CSS/JS references.
+Changes:
+- Currency conversion now uses the free Frankfurter live exchange-rate API.
+- No API key required.
+- Seller asking price asks for number only.
+- Seller asking price currency is selected separately.
+- The app converts seller currency into the selected research country currency.
+- AUD reference is also shown.
+- Manual rate override is still available if the live API fails or you want to match Wise/Google exactly.
+- Amazon US links include currency=USD and language=en_US, though Amazon may still override display currency based on account/location/browser settings.
 
-Wise usage:
-If Wise shows `1 SGD = 1.09 AUD`, enter `1.09` in Wise rate override.
+Live endpoint used:
+https://api.frankfurter.dev/v1/latest?amount=1&from=SGD&to=USD
+
+Fallback endpoint used:
+https://api.frankfurter.app/latest?amount=1&from=SGD&to=USD
