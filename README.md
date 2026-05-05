@@ -22,3 +22,12 @@ https://api.frankfurter.dev/v1/latest?amount=1&from=SGD&to=USD
 
 Fallback endpoint used:
 https://api.frankfurter.app/latest?amount=1&from=SGD&to=USD
+
+
+## Compact mobile update
+
+- Reduced button size and padding substantially for iPhone.
+- Reduced card spacing and vertical gaps.
+- Removed most guide/description text from the UI.
+- Kept key labels and core actions only.
+- Layout is more compact to minimise scrolling.

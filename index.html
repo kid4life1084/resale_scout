@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scouty</title>
-  <link rel="stylesheet" href="styles.css?v=frankfurter1" />
+  <link rel="stylesheet" href="styles.css?v=compact1" />
 </head>
 <body>
 <main class="app">
@@ -12,7 +12,6 @@
     <div>
       <p class="eyebrow">eBay-first resale assistant</p>
       <h1>Scouty</h1>
-      <p class="muted">Research resale items faster with eBay, marketplace links, Wise-style currency checks, review searches, and Google Sheets export.</p>
     </div>
     <div class="hero-panel">
       <div><span>Records</span><strong id="recordCount">0</strong></div>
@@ -29,7 +28,7 @@
     <div class="section-head">
       <div>
         <p class="eyebrow dark">Research market</p>
-        <h2>Choose the country you want to research/sell in</h2>
+        <h2>Research country</h2>
       </div>
       <button id="resetMarketBtn" type="button" class="secondary">Reset to Australia</button>
     </div>
@@ -45,16 +44,16 @@
   <section class="grid">
     <section class="card">
       <h2>Product details</h2>
-      <label>Product search phrase<input id="productPhrase" placeholder="e.g. R-Type 1 PC Engine"></label>
+      <label>Product<input id="productPhrase" placeholder="e.g. R-Type 1 PC Engine"></label>
       <div class="two">
         <label>Brand<input id="brand" placeholder="Optional"></label>
         <label>Model<input id="model" placeholder="Optional"></label>
       </div>
       <div class="two">
-        <label>Variant / connection type<input id="variant" placeholder="Optional"></label>
+        <label>Variant<input id="variant" placeholder="Optional"></label>
         <label>Colour<input id="colour" placeholder="Optional"></label>
       </div>
-      <label>Condition filter
+      <label>Condition
         <select id="condition">
           <option value="">Any condition</option>
           <option>Brand new</option>
@@ -70,11 +69,10 @@
 
       <section class="deal-card">
         <div class="section-head simple">
-          <h3>Seller asking price / buy cost</h3>
-          <p>Type only the seller’s asking price number, then choose the seller currency below. The app converts it into your selected research market currency using live exchange rates.</p>
+          <h3>Seller price</h3>
         </div>
         <div class="two">
-          <label>Seller asking price number<input id="buyPrice" inputmode="decimal" placeholder="e.g. 27"></label>
+          <label>Seller price<input id="buyPrice" inputmode="decimal" placeholder="e.g. 27"></label>
           <label>Seller asking price currency
             <select id="buyCurrency">
               <option value="AUD">AUD - Australia</option>
@@ -86,7 +84,7 @@
           </label>
         </div>
         <div class="two">
-          <label>Manual rate override
+          <label>Rate override
             <input id="marketRateOverride" placeholder="Optional, e.g. 0.7844 for SGD→USD">
           </label>
           <label>Conversion source
@@ -97,46 +95,42 @@
           </label>
         </div>
         <div class="button-row">
-          <button id="openWiseBtn" type="button" class="secondary">Open Wise Conversion</button>
+          <button id="openWiseBtn" type="button" class="secondary">Wise</button>
         </div>
         <div id="buyCostResult" class="mini-result">Enter seller asking price number, choose its currency, then analyze.</div>
       </section>
 
-      <label>Your target selling price<input id="price" placeholder="Optional, e.g. 60"></label>
+      <label>Target sell price<input id="price" placeholder="Optional, e.g. 60"></label>
       <label>Notes<textarea id="notes" placeholder="Seller notes, box condition, missing parts, questions to ask, etc."></textarea></label>
       <div class="button-row">
-        <button id="analyzeBtn" type="button">Analyze Product</button>
-        <button id="clearBtn" type="button" class="secondary">Clear form</button>
+        <button id="analyzeBtn" type="button">Analyze</button>
+        <button id="clearBtn" type="button" class="secondary">Clear</button>
       </div>
     </section>
 
     <section class="card">
       <h2>Image research</h2>
-      <p class="muted">Use these when you need to identify a product, confirm the colour, or check the exact variant.</p>
       <div class="lens-card">
         <div>
           <h3>Use Google Lens</h3>
-          <p>Upload the seller photo or screenshot, then copy product details back here.</p>
         </div>
         <a class="primary-link" href="https://lens.google.com/search" target="_blank" rel="noopener noreferrer">Open Google Lens</a>
       </div>
       <div class="lens-card soft">
         <div>
           <h3>Google Images</h3>
-          <p>Visually confirm packaging, accessories, colour and variant.</p>
         </div>
-        <button id="googleImagesBtn" type="button" class="secondary">Open Google Images</button>
+        <button id="googleImagesBtn" type="button" class="secondary">Images</button>
       </div>
       <section class="sellthrough-box">
         <div class="section-head simple">
           <h2>eBay sell-through rate research</h2>
-          <p>Use eBay’s Product Research tool for official sell-through rate, recent sales, average sold price and market trends.</p>
         </div>
         <div class="button-row">
-          <button id="openResearchBtn" type="button">Open eBay Product Research</button>
-          <button id="openSoldBtn" type="button" class="secondary">Open eBay Sold Search</button>
+          <button id="openResearchBtn" type="button">eBay Research</button>
+          <button id="openSoldBtn" type="button" class="secondary">eBay Sold</button>
         </div>
-        <div id="sellThroughResult" class="sellthrough-result">Open eBay Product Research, search your product phrase there, and use eBay’s official sell-through rate.</div>
+        <div id="sellThroughResult" class="sellthrough-result">eBay Research, search your product phrase there, and use eBay’s official sell-through rate.</div>
       </section>
     </section>
   </section>
@@ -144,12 +138,11 @@
   <section class="card">
     <div class="section-head simple">
       <h2>Google Sheets export</h2>
-      <p>Use a Google Apps Script web app URL to send the current record directly into your Google Sheet.</p>
     </div>
-    <label>Google Sheets Web App URL<input id="sheetWebhookUrl" placeholder="Paste your Google Apps Script Web App URL here"></label>
+    <label>Sheets Web App URL<input id="sheetWebhookUrl" placeholder="Paste your Google Apps Script Web App URL here"></label>
     <div class="button-row">
-      <button id="saveWebhookBtn" type="button" class="secondary">Save Sheets URL locally</button>
-      <button id="sendSheetBtn" type="button">Send current record to Google Sheets</button>
+      <button id="saveWebhookBtn" type="button" class="secondary">Save Sheets URL</button>
+      <button id="sendSheetBtn" type="button">Send to Sheets</button>
     </div>
     <div id="sheetStatus" class="mini-result">Paste your Web App URL, save it, then send a saved/current record.</div>
   </section>
@@ -157,9 +150,8 @@
   <section class="card">
     <div class="section-head simple">
       <h2>Research output</h2>
-      <p>Analyze Product converts the seller asking price from the seller currency into the selected research market currency.</p>
     </div>
-    <div id="summary" class="summary-box">Enter product details and click Analyze Product.</div>
+    <div id="summary" class="summary-box">Enter product details and click Analyze.</div>
     <div id="links" class="links"></div>
     <div class="button-row">
       <button id="saveBtn" type="button">Save record</button>
@@ -177,6 +169,6 @@
     </div>
   </section>
 </main>
-<script src="app.js?v=frankfurter1" defer></script>
+<script src="app.js?v=compact1" defer></script>
 </body>
 </html>
